@@ -1,0 +1,22 @@
+digraph CouplingGraph {
+  "cars" -> "GarageManager" [label="6,67%"];
+  "Wheel" -> "System.out" [label="6,67%"];
+  "driver" -> "Main" [label="6,67%"];
+  "GarageManager" -> "cars" [label="6,67%"];
+  "GarageManager" -> "car" [label="6,67%"];
+  "manager" -> "Main" [label="13,33%"];
+  "engine" -> "Car" [label="13,33%"];
+  "car" -> "GarageManager" [label="6,67%"];
+  "car" -> "Driver" [label="13,33%"];
+  "Car" -> "engine" [label="13,33%"];
+  "Car" -> "wheel" [label="6,67%"];
+  "Car" -> "System.out" [label="13,33%"];
+  "wheel" -> "Car" [label="6,67%"];
+  "Driver" -> "car" [label="13,33%"];
+  "System.out" -> "Wheel" [label="6,67%"];
+  "System.out" -> "Car" [label="13,33%"];
+  "System.out" -> "Engine" [label="13,33%"];
+  "Main" -> "manager" [label="13,33%"];
+  "Main" -> "driver" [label="6,67%"];
+  "Engine" -> "System.out" [label="13,33%"];
+}
