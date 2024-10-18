@@ -28,8 +28,8 @@ public class CouplingCalculator {
                     double coupling = calculateCouplingBetweenClasses(classA, classB);
                     if (coupling > 0) {
                         couplingMatrix
-                            .computeIfAbsent(classA, k -> new HashMap<>())
-                            .put(classB, coupling);
+                                .computeIfAbsent(classA, k -> new HashMap<>())
+                                .put(classB, coupling);
                     }
                 }
             }
@@ -77,14 +77,14 @@ public class CouplingCalculator {
 
         for (Map.Entry<String, Set<String>> entry : callGraph.entrySet()) {
             String callerClass = getClassName(entry.getKey());
-            
+
             for (String calledMethod : entry.getValue()) {
                 String calledClass = getClassName(calledMethod);
-                
+
                 if (!callerClass.equals(calledClass)) {
                     totalCouplings++;
                     if ((callerClass.equals(classA) && calledClass.equals(classB)) ||
-                        (callerClass.equals(classB) && calledClass.equals(classA))) {
+                            (callerClass.equals(classB) && calledClass.equals(classA))) {
                         couplingAB++;
                     }
                 }
@@ -109,7 +109,7 @@ public class CouplingCalculator {
             }
         }
     }
-    
+
     /**
      * Obtient le couplage entre deux classes spécifiques.
      * @param classA Le nom de la première classe.
@@ -120,7 +120,7 @@ public class CouplingCalculator {
         return calculateCouplingBetweenClasses(classA, classB);
     }
 
-    
+
     /**
      * Obtient les N paires de classes les plus couplées.
      * @param topN Le nombre de paires à retourner.
@@ -142,9 +142,9 @@ public class CouplingCalculator {
         couplingPairs.sort((a, b) -> Double.compare(b.coupling, a.coupling));
         return couplingPairs.subList(0, Math.min(topN, couplingPairs.size()));
     }
-    
-    
-    
+
+
+
     /**
      * Affiche les N paires de classes les plus couplées.
      * @param topCoupled La liste des paires de classes les plus couplées.
@@ -190,7 +190,7 @@ public class CouplingCalculator {
 
         CouplingCalculator calculator = new CouplingCalculator(analyzer);
         Map<String, Map<String, Double>> couplingMatrix = calculator.calculateCoupling();
-        
+
         calculator.printCouplingMatrix(couplingMatrix);
 
         List<CouplingPair> topCoupled = calculator.getTopCoupledClasses(5);
