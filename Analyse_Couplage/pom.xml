@@ -1,0 +1,30 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>CouplageCluster</groupId>
+  <artifactId>couplage</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  
+  <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+    <dependency>
+        <groupId>org.eclipse.jdt</groupId>
+        <artifactId>org.eclipse.jdt.core</artifactId>
+        <version>3.29.0</version>
+    </dependency>
+    
+    <dependency>
+    <groupId>guru.nidi</groupId>
+    <artifactId>graphviz-java</artifactId>
+    <version>0.18.1</version>
+</dependency>
+
+   
+</dependencies>
+
+    
+</project>
