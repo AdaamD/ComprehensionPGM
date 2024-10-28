@@ -17,6 +17,7 @@ public class HierarchicalClusteringAnalyzer {
         }
     }
 
+    // Méthode pour effectuer une étape de clustering
     public boolean performNextClusteringStep() {
         if (clusters.size() <= 1) {
             return false; // Le clustering est terminé
@@ -51,6 +52,7 @@ public class HierarchicalClusteringAnalyzer {
         return false;
     }
 
+    // Méthode pour calculer le couplage entre deux clusters
     private double calculateCouplingBetweenClusters(Cluster c1, Cluster c2) {
         double totalCoupling = 0;
         for (String class1 : c1.getClasses()) {
@@ -61,6 +63,7 @@ public class HierarchicalClusteringAnalyzer {
         return totalCoupling / (c1.getClasses().size() * c2.getClasses().size());
     }
 
+    // Méthode pour obtenir le couplage entre deux classes
     private double getCouplingBetweenClasses(String class1, String class2) {
         if (couplingGraph.containsKey(class1) && couplingGraph.get(class1).containsKey(class2)) {
             return couplingGraph.get(class1).get(class2);
@@ -68,14 +71,17 @@ public class HierarchicalClusteringAnalyzer {
         return 0;
     }
 
+    // Méthode pour obtenir les clusters finaux
     public List<Cluster> getClusters() {
         return new ArrayList<>(clusters);
     }
 
+    // Méthode pour obtenir la dernière paire fusionnée
     public ClusterPair getLastMergedPair() {
         return lastMergedPair;
     }
 
+    // Méthode pour calculer le couplage intra-cluster
     public double calculateIntraClusterCoupling(Cluster cluster) {
         double totalCoupling = 0;
         int count = 0;
@@ -89,6 +95,7 @@ public class HierarchicalClusteringAnalyzer {
         return count > 0 ? totalCoupling / count : 0;
     }
 
+    // Méthode pour calculer le couplage inter-cluster
     public double calculateAverageInterClusterCoupling() {
         double totalCoupling = 0;
         int count = 0;

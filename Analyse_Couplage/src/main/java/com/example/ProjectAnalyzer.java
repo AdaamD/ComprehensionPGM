@@ -13,11 +13,12 @@ public class ProjectAnalyzer {
     private final Map<String, Map<String, Map<String, Integer>>> callGraph = new HashMap<>();
     private Map<String, Map<String, Double>> couplingGraph = new HashMap<>();
 
-    
+    // Les packages standard Java à ignorer
     private static final List<String> IGNORED_PACKAGES = Arrays.asList(
         "java.", "javax.", "sun.", "com.sun.", "org.w3c.", "org.xml."
     );
 
+    // Méthode pour analyser un projet Java
     public void analyzeProject(String projectPath) {
         try {
             // Configurez le classpath pour inclure les fichiers du projet analysé
@@ -43,6 +44,7 @@ public class ProjectAnalyzer {
 
     }
 
+    // Méthode pour analyser un fichier Java
     private void analyzeFile(Path filePath, ASTParser parser) {
         try {
             String content = new String(Files.readAllBytes(filePath));
@@ -63,6 +65,7 @@ public class ProjectAnalyzer {
         }
     }
 
+    // Méthode pour fusionner les graphes d'appels locaux
     private void mergeCallGraphs(Map<String, Map<String, Map<String, Integer>>> localGraph) {
         for (Map.Entry<String, Map<String, Map<String, Integer>>> classEntry : localGraph.entrySet()) {
             String className = classEntry.getKey();
@@ -77,6 +80,7 @@ public class ProjectAnalyzer {
         }
     }
 
+    // Méthode pour afficher le graphe d'appels
     public void printCallGraph() {
         for (Map.Entry<String, Map<String, Map<String, Integer>>> classEntry : callGraph.entrySet()) {
             System.out.println("Classe " + classEntry.getKey() + ":");
@@ -89,6 +93,7 @@ public class ProjectAnalyzer {
         }
     }
 
+    // Méthode pour calculer le couplage entre les classes
     public void calculateCoupling() {
         couplingGraph.clear();
         int totalRelations = 0;
@@ -127,7 +132,7 @@ public class ProjectAnalyzer {
     }
 
 
-
+// Méthode pour vérifier si une classe doit être ignorée
     private boolean isIgnoredClass(String className) {
         // Utilisez la même logique que dans CallGraphVisitor
         Set<String> ignoredClasses = new HashSet<>(Arrays.asList(

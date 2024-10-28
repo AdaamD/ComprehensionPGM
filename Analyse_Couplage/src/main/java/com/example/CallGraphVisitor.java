@@ -10,16 +10,19 @@ public class CallGraphVisitor extends ASTVisitor {
     private String currentMethod = "";
     private Map<String, String> localVariableTypes = new HashMap<>();
 
+    // Les packages standard Java à ignorer
     private static final List<String> IGNORED_PACKAGES = Arrays.asList(
         "java.", "javax.", "sun.", "com.sun.", "org.w3c.", "org.xml."
     );
 
+    //Méthode pour visiter les classes
     @Override
     public boolean visit(TypeDeclaration node) {
         currentClass = node.getName().getIdentifier();
         return true;
     }
 
+    //Méthode pour visiter les méthodes
     @Override
     public boolean visit(MethodDeclaration node) {
         currentMethod = node.getName().getIdentifier();
@@ -33,6 +36,7 @@ public class CallGraphVisitor extends ASTVisitor {
         return true;
     }
 
+    //Méthode pour visiter les déclarations de variables
     @Override
     public boolean visit(VariableDeclarationFragment node) {
         IVariableBinding binding = node.resolveBinding();
@@ -42,6 +46,7 @@ public class CallGraphVisitor extends ASTVisitor {
         return true;
     }
 
+    //Méthode pour visiter les assignations
     @Override
     public boolean visit(Assignment node) {
         if (node.getLeftHandSide() instanceof SimpleName) {
@@ -54,6 +59,7 @@ public class CallGraphVisitor extends ASTVisitor {
         return true;
     }
 
+    //Méthode pour visiter les appels de méthodes
     @Override
     public boolean visit(MethodInvocation node) {
         if (!currentClass.isEmpty() && !currentMethod.isEmpty()) {
@@ -69,6 +75,7 @@ public class CallGraphVisitor extends ASTVisitor {
     }
 
 
+    //Méthode pour résoudre la classe appelée par un noeud MethodInvocation
     private String resolveCalledClass(MethodInvocation node) {
         String resolvedClass = resolveClassInternal(node);
         if (resolvedClass != null) {
@@ -90,6 +97,7 @@ public class CallGraphVisitor extends ASTVisitor {
         }
         return null;
     }
+
 
     private String resolveClassInternal(MethodInvocation node) {
         Expression expr = node.getExpression();
@@ -128,6 +136,7 @@ public class CallGraphVisitor extends ASTVisitor {
         return null;
     }
 
+    //Méthode pour ignorer les classes standard Java
     private boolean isIgnoredClass(String className) {
         // Ajoutez ici les noms des classes standard que vous voulez ignorer
         Set<String> ignoredClasses = new HashSet<>(Arrays.asList(
@@ -147,8 +156,7 @@ public class CallGraphVisitor extends ASTVisitor {
         return IGNORED_PACKAGES.stream().anyMatch(className::startsWith);
     }
 
-
-
+    //Méthode pour ajouter un type de variable à la liste des types de variables locales
     private void addVariableType(String variableName, Type type) {
         if (type.isSimpleType()) {
             SimpleType simpleType = (SimpleType) type;
